@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { projects, type Category } from '../../data/projects';
+import { PointerIcon } from '../Icons';
 
 const FILTERS: { id: 'all' | Category; label: string }[] = [
   { id: 'all', label: 'All' },
@@ -33,8 +34,9 @@ export default function Projects() {
               <Link className="thumb" to={to} aria-label={p.name}>
                 <div className="shot">
                   <div className="top"><span>{p.kind}</span><span>{p.period}</span></div>
-                  <svg viewBox="0 0 400 120" preserveAspectRatio="none" aria-hidden="true"><path d={p.spark} fill="none" stroke="#8f4dff" strokeWidth="2.5" /></svg>
+                  <svg className="spark" viewBox="0 0 400 120" preserveAspectRatio="none" aria-hidden="true"><path d={p.spark} fill="none" stroke="#8f4dff" strokeWidth="2.5" /></svg>
                   <div className="metric"><b>{p.metric}</b><span>{p.metricLabel}</span></div>
+                  <span className="tap-hint" aria-hidden="true"><span className="hand"><PointerIcon /></span>Click to explore</span>
                 </div>
               </Link>
               <Link to={to}><h3>{p.name}</h3></Link>

@@ -98,10 +98,19 @@
 .proj .shot { position: relative; aspect-ratio: 16 / 9; background: #161b22; border: 1px solid #2a2f3a; border-radius: 5px; padding: 24px; display: flex; flex-direction: column; justify-content: space-between; color: #fff; transition: transform .35s var(--ease); }
 .proj .thumb:hover .shot { transform: scale(1.05); }
 .proj .shot .top { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 13px; color: #b9bfcc; }
-.proj .shot svg { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 55%; }
+.proj .shot .spark { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 55%; }
 .proj .shot .metric { position: relative; display: flex; flex-direction: column; }
 .proj .shot .metric b { font-size: 52px; font-weight: 900; line-height: 1; }
 .proj .shot .metric span { font-size: 14px; color: #b9bfcc; margin-top: 6px; }
+/* "click to explore" hint: a tapping hand so visitors know the card opens a case study */
+.tap-hint { position: absolute; top: 52px; right: 18px; z-index: 2; display: flex; align-items: center; gap: 8px; padding: 6px 12px 6px 8px; border-radius: 999px; background: rgba(13, 17, 22, .72); border: 1px solid rgba(143, 77, 255, .55); color: #e6e9ef; font-size: 13px; font-weight: 700; backdrop-filter: blur(4px); transition: background .25s, border-color .25s, transform .25s; }
+.tap-hint .hand { position: relative; display: flex; color: var(--accent-soft); animation: tap 1.8s ease-in-out infinite; }
+.tap-hint .hand::after { content: ''; position: absolute; left: 4px; top: -2px; width: 8px; height: 8px; border-radius: 50%; border: 2px solid var(--accent-soft); opacity: 0; animation: tap-ring 1.8s ease-out infinite; }
+@keyframes tap { 0%, 55%, 100% { transform: translate(0, 0) scale(1); } 30% { transform: translate(-1px, 2px) scale(.88); } }
+@keyframes tap-ring { 0%, 25% { opacity: 0; transform: scale(.4); } 32% { opacity: .9; } 70%, 100% { opacity: 0; transform: scale(2.2); } }
+.proj:hover .tap-hint { background: var(--accent-deep); border-color: var(--accent-deep); transform: translateY(-2px); color: #fff; }
+.proj:hover .tap-hint .hand { color: #fff; }
+.proj:hover .tap-hint .hand::after { border-color: #fff; }
 .proj h3 { margin: 6px 0 0; font-size: 26px; }
 .proj p { margin: 0; line-height: 1.6; }
 .proj .actions { display: flex; gap: 22px; font-weight: 700; margin-top: 4px; }
