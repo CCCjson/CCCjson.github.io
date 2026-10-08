@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Picture from '../Picture';
 import { ChevronDown, ExpandIcon, GitHubIcon, LinkedInIcon } from '../Icons';
 import { links } from '../../data/profile';
@@ -49,9 +49,30 @@ function Avatar() {
   );
 }
 
+/** Writes scroll progress through the hero (0 → 1) to --p for the parallax hand-off. */
+function useScrollProgress<T extends HTMLElement>() {
+  const ref = useRef<T>(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const p = Math.min(1, Math.max(0, window.scrollY / el.offsetHeight));
+      el.style.setProperty('--p', p.toFixed(3));
+    };
+    const onScroll = () => { if (!frame) frame = requestAnimationFrame(update); };
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => { window.removeEventListener('scroll', onScroll); cancelAnimationFrame(frame); };
+  }, []);
+  return ref;
+}
+
 export default function Hero() {
+  const ref = useScrollProgress<HTMLElement>();
   return (
-    <section id="top" className="hero">
+    <section id="top" className="hero" ref={ref}>
       <SilkWave />
       <div className="inner">
         <Avatar />
